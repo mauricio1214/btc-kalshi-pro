@@ -67,7 +67,7 @@ function calc(){
 async function load(){
  $('status').textContent='Actualizando…';
  try{
-  const res=await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=100',{cache:'no-store'});
+  const res=await fetch(https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=15m&limit=100'',{cache:'no-store'});
   if(!res.ok)throw new Error('No se pudo consultar Binance');
   const raw=await res.json(), rows=raw.slice(0,-1);
   const closes=rows.map(x=>Number(x[4])),vols=rows.map(x=>Number(x[5])), highs=rows.map(x=>Number(x[2])), lows=rows.map(x=>Number(x[3]));
