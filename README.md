@@ -1,18 +1,18 @@
-# BTC Kalshi Pro para iPhone
+# BTC KALSHI PRO 2.0
 
-## Publicar con GitHub Pages
-1. Sube todos los archivos de esta carpeta a la raíz de un repositorio público.
-2. En GitHub abre **Settings → Pages**.
-3. En **Build and deployment**, elige **Deploy from a branch**.
-4. Selecciona **main** y **/(root)**, luego **Save**.
-5. Espera a que GitHub Pages publique el sitio. Abre la URL que aparece en esa página desde Safari en tu iPhone.
-6. En Safari toca **Compartir → Añadir a pantalla de inicio**.
+Aplicación web progresiva para iPhone. Muestra señales técnicas SUBE / BAJA / ESPERAR usando velas BTCUSDT de 15 minutos, RSI, EMA 9/21 y momentum MACD.
 
-## Alcance y limitaciones
-- El precio y las velas se consultan desde la API pública de Binance (BTCUSDT, 15 minutos).
-- Los indicadores son una lectura técnica sencilla, no una probabilidad calibrada ni una predicción garantizada.
-- No hay conexión con la cuenta, precios ni API de Kalshi. Introduce/verifica manualmente el precio del contrato en Kalshi.
-- No realiza apuestas ni órdenes automáticas.
-- El navegador de iPhone puede suspender la app en segundo plano. Esta PWA no garantiza análisis 24/7 ni alertas cuando está cerrada. Para eso se necesita un servicio backend en la nube y un sistema de notificaciones.
-- La calculadora es aproximada y no incorpora comisiones, spread ni otras condiciones de Kalshi.
-- Los datos requieren internet y disponibilidad de Binance.
+## Publicar en GitHub Pages
+1. Descomprime el ZIP.
+2. En el repositorio `btc-kalshi-pro`, reemplaza los archivos anteriores por estos archivos (sube `index.html`, `manifest.webmanifest`, `sw.js`, `icon-192.png`, `icon-512.png`).
+3. Guarda con Commit changes.
+4. Espera a que GitHub Pages publique los cambios.
+5. Abre la dirección de GitHub Pages en Safari en el iPhone.
+6. Toca Compartir > Añadir a pantalla de inicio.
+
+## Datos y limitaciones
+- Datos públicos de Binance: BTCUSDT.
+- Actualiza cada 30 segundos mientras la app está visible.
+- iOS puede pausar la actualización en segundo plano.
+- Las señales son análisis técnico orientativo, no predicciones garantizadas ni probabilidades reales de ganar.
+- No se conecta a tu cuenta de Kalshi y no ejecuta apuestas.
