@@ -1,89 +1,88 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#07111f">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BTC Kalshi Pro">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-192.png">
-<title>BTC KALSHI PRO 2.0</title>
+<link rel="manifest" href="manifest.json">
+<title>BTC KALSHI PRO 1M</title>
+<script src="https://unpkg.com/lightweight-charts@4.2.2/dist/lightweight-charts.standalone.production.js"></script>
 <style>
-:root{color-scheme:dark;--bg:#07111f;--panel:#101e30;--panel2:#15263b;--line:#263a52;--txt:#f3f7fc;--muted:#9eb0c5;--green:#25d695;--red:#ff647c;--yellow:#ffc857;--blue:#70b7ff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#132b46 0,#07111f 55%);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:env(safe-area-inset-top) 15px calc(24px + env(safe-area-inset-bottom))}
-main{max-width:720px;margin:auto}.top{display:flex;align-items:center;justify-content:space-between;padding:20px 2px 15px}.brand{font-weight:850;letter-spacing:.4px;font-size:19px}.brand span{color:var(--yellow)}.pill{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:7px 10px;border-radius:99px}
-.pricebox,.card{background:linear-gradient(145deg,#14263b,#0d1a2a);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:12px;box-shadow:0 8px 25px #0002}
-.label{font-size:11px;letter-spacing:1px;color:var(--muted);font-weight:700}.price{font-size:35px;font-weight:850;margin:7px 0 2px;letter-spacing:-1px}.sub{font-size:12px;color:var(--muted)}.signal{padding:20px;text-align:center;border-radius:18px;background:var(--panel);border:1px solid var(--line);margin-bottom:12px}.signalword{font-size:31px;font-weight:900;margin:9px 0}.signalword.up{color:var(--green)}.signalword.down{color:var(--red)}.signalword.wait{color:var(--yellow)}.reason{font-size:13px;color:var(--muted);line-height:1.5}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metric{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px}.metric .v{font-size:22px;font-weight:800;margin-top:7px}.metric .hint{font-size:11px;color:var(--muted);margin-top:4px}
-.chartwrap{height:145px;margin-top:12px}.chartwrap canvas{width:100%;height:100%}
-.status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:13px 2px}.dot{width:8px;height:8px;border-radius:50%;background:var(--yellow)}.dot.ok{background:var(--green)}.dot.err{background:var(--red)}
-button{width:100%;border:1px solid #36516f;background:#1b3551;color:white;padding:14px;border-radius:13px;font-size:14px;font-weight:750;margin:4px 0 12px}
-.note{font-size:11px;line-height:1.5;color:var(--muted);padding:4px 2px 18px}.foot{font-size:10px;color:#71869f;text-align:center;padding:10px}
-</style>
-</head>
+:root{color-scheme:dark;--bg:#07111f;--panel:#101d2d;--line:#20334a;--muted:#91a4bb;--green:#21c784;--red:#ff5c6c;--yellow:#f5c451}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#edf4fc;font:15px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif}
+header{padding:18px 16px 12px;background:#0b1727;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}
+h1{font-size:19px;margin:0 0 5px;letter-spacing:.4px}.sub{font-size:12px;color:var(--muted)}
+main{max-width:900px;margin:auto;padding:12px;display:grid;gap:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px}
+.price{font-size:25px;font-weight:750;font-variant-numeric:tabular-nums}.muted{color:var(--muted);font-size:12px}
+.pill{padding:6px 9px;border-radius:999px;background:#1b2b40;color:#c7d5e5;font-size:12px}
+#chart{height:330px;width:100%}.signal{font-size:25px;font-weight:800;letter-spacing:.5px}.buy{color:var(--green)}.sell{color:var(--red)}.wait{color:var(--yellow)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric{background:#0b1727;border-radius:10px;padding:10px}.metric b{display:block;font-size:17px;margin-top:4px}
+button{border:0;border-radius:10px;padding:10px 13px;background:#203852;color:#fff;font-weight:650}
+button:active{opacity:.75}.small{font-size:12px;color:var(--muted);line-height:1.45}
+.status{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);margin-right:6px}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:4px 14px 25px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}#chart{height:430px}}
+</style></head>
 <body>
+<header><h1>₿ BTC KALSHI PRO <span class="pill">1M + 5M</span></h1><div class="sub"><span class="status" id="dot"></span><span id="connection">Conectando con datos de mercado…</span></div></header>
 <main>
- <div class="top"><div class="brand"><span>₿</span> BTC KALSHI PRO <span style="color:#70b7ff">2.0</span></div><div class="pill">BTC / USDT · 15 MIN</div></div>
- <section class="pricebox">
-  <div class="label">PRECIO DE BITCOIN</div><div class="price" id="price">Cargando…</div>
-  <div class="sub" id="updated">Esperando datos del mercado</div>
-  <div class="chartwrap"><canvas id="chart"></canvas></div>
- </section>
- <section class="signal">
-  <div class="label">SEÑAL TÉCNICA</div><div id="signal" class="signalword wait">ESPERAR</div>
-  <div id="reason" class="reason">Analizando velas de 15 minutos…</div>
- </section>
- <div class="grid">
-  <div class="metric"><div class="label">RSI (14)</div><div class="v" id="rsi">--</div><div class="hint" id="rsiHint">Índice de fuerza relativa</div></div>
-  <div class="metric"><div class="label">TENDENCIA EMA</div><div class="v" id="trend">--</div><div class="hint">EMA 9 frente a EMA 21</div></div>
-  <div class="metric"><div class="label">MACD</div><div class="v" id="macd">--</div><div class="hint" id="macdHint">Momentum</div></div>
-  <div class="metric"><div class="label">CONFLUENCIA</div><div class="v" id="score">--</div><div class="hint">Coincidencia de indicadores</div></div>
- </div>
- <div class="status"><span class="dot" id="dot"></span><span id="status">Conectando con el mercado…</span></div>
- <button id="refresh">Actualizar ahora</button>
- <div class="note"><b>Importante:</b> estas son señales técnicas estimadas, no garantías ni probabilidades reales de ganar. Confirma siempre el precio y las reglas del contrato en Kalshi antes de operar. La aplicación no realiza apuestas. En iPhone, las actualizaciones automáticas pueden pausarse cuando la app queda en segundo plano; mantenla abierta para recibir datos frecuentes.</div>
- <div class="foot">BTC KALSHI PRO 2.0 · Datos públicos de mercado · No ejecuta operaciones</div>
-</main>
+<section class="card">
+ <div class="row" style="justify-content:space-between"><div><div class="muted">BITCOIN / USDT</div><div class="price" id="price">—</div></div><div style="text-align:right"><div class="muted">Cambio 1m</div><div id="change" class="price" style="font-size:18px">—</div></div></div>
+ <div class="row" style="margin-top:12px"><span class="pill">Temporalidad: 1 minuto</span><span class="pill">Confirmación: 5 minutos</span><button id="refresh">Actualizar</button></div>
+</section>
+<section class="card"><div class="row" style="justify-content:space-between"><b>Gráfica de velas japonesas</b><span class="muted">EMA 9 / EMA 21</span></div><div id="chart"></div></section>
+<section class="card">
+ <div class="row" style="justify-content:space-between"><div><div class="muted">SEÑAL ACTUAL</div><div id="signal" class="signal wait">ESPERAR</div></div><div style="text-align:right"><div class="muted">Confluencia</div><div class="price" id="score" style="font-size:23px">—</div></div></div>
+ <div class="small" id="reason" style="margin-top:9px">Esperando suficientes velas para calcular los indicadores.</div>
+</section>
+<section class="card"><b>Confirmaciones técnicas</b><div class="grid" style="margin-top:10px">
+ <div class="metric"><span class="muted">EMA 9 / 21 · 1M</span><b id="ema1">—</b></div>
+ <div class="metric"><span class="muted">RSI 14 · 1M</span><b id="rsi">—</b></div>
+ <div class="metric"><span class="muted">MACD · 1M</span><b id="macd">—</b></div>
+ <div class="metric"><span class="muted">Tendencia · 5M</span><b id="trend5">—</b></div>
+ </div></section>
+<section class="card"><b>Cómo leer la señal</b><p class="small">SUBE o BAJA aparece únicamente cuando coinciden varias condiciones de tendencia e impulso en 1M y 5M. Si hay señales mezcladas, el sistema muestra ESPERAR. La señal es una estimación técnica, no una garantía ni una instrucción para apostar.</p><div class="small">Fuente de precios: mercado BTC/USDT de Binance. Puede haber diferencias frente al precio de referencia de Kalshi.</div></section>
+</main><footer>BTC KALSHI PRO · Herramienta informativa · No ejecuta operaciones</footer>
 <script>
 const $=id=>document.getElementById(id);
-const fmt=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);
-let busy=false;
-function ema(values,period){let k=2/(period+1),out=[];let prev=values.slice(0,period).reduce((a,b)=>a+b,0)/period;out[period-1]=prev;for(let i=period;i<values.length;i++){prev=values[i]*k+prev*(1-k);out[i]=prev;}return out;}
-function rsi(values,period=14){let gains=0,losses=0;for(let i=1;i<=period;i++){let d=values[i]-values[i-1];if(d>0)gains+=d;else losses-=d;}let ag=gains/period,al=losses/period;for(let i=period+1;i<values.length;i++){let d=values[i]-values[i-1];ag=(ag*(period-1)+Math.max(d,0))/period;al=(al*(period-1)+Math.max(-d,0))/period;}return al===0?100:100-100/(1+ag/al);}
-function draw(closes){const c=$('chart'),ctx=c.getContext('2d'),dpr=window.devicePixelRatio||1,w=c.clientWidth,h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);if(!closes.length)return;let min=Math.min(...closes),max=Math.max(...closes),pad=8,range=max-min||1;ctx.beginPath();closes.forEach((v,i)=>{let x=pad+i/(closes.length-1)*(w-pad*2),y=h-pad-(v-min)/range*(h-pad*2);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.strokeStyle=closes.at(-1)>=closes[0]?'#25d695':'#ff647c';ctx.lineWidth=2.5;ctx.stroke();}
-function setStatus(s,type){$('status').textContent=s;$('dot').className='dot '+(type||'');}
-async function load(){
- if(busy)return;busy=true;$('refresh').textContent='Actualizando…';
- try{
-  const base='https://data-api.binance.vision/api/v3';
-  const [kres,tres]=await Promise.all([
-   fetch(base+'/klines?symbol=BTCUSDT&interval=15m&limit=100',{cache:'no-store'}),
-   fetch(base+'/ticker/price?symbol=BTCUSDT',{cache:'no-store'})
-  ]);
-  if(!kres.ok||!tres.ok)throw new Error('El proveedor de datos respondió con error ('+kres.status+'/'+tres.status+').');
-  const klines=await kres.json(),ticker=await tres.json();
-  if(!Array.isArray(klines)||klines.length<35)throw new Error('No llegaron suficientes velas para analizar.');
-  const closes=klines.map(k=>Number(k[4])),price=Number(ticker.price);
-  const e9=ema(closes,9),e21=ema(closes,21),r=rsi(closes),macdLine=ema(closes,12).map((v,i)=>v-(ema(closes,26)[i]||v));
-  const macdNow=macdLine.at(-1),macdPrev=macdLine.at(-2),up=e9.at(-1)>e21.at(-1),mom=macdNow>macdPrev;
-  let points=(up?1:-1)+(mom?1:-1)+(r>=50&&r<=70?1:(r<50?-1:0));
-  let sig='ESPERAR',cls='wait',why='Los indicadores no coinciden claramente. Es mejor esperar.';
-  if(points>=2){sig='SUBE';cls='up';why='EMA 9 por encima de EMA 21 y momentum favorable. Confirma el movimiento antes de entrar.';}
-  else if(points<=-2){sig='BAJA';cls='down';why='EMA 9 por debajo de EMA 21 y momentum débil. Confirma el movimiento antes de entrar.';}
-  $('price').textContent=fmt(price);$('updated').textContent='Actualizado: '+new Date().toLocaleTimeString('es-US',{hour:'numeric',minute:'2-digit',second:'2-digit'});
-  $('signal').textContent=sig;$('signal').className='signalword '+cls;$('reason').textContent=why;
-  $('rsi').textContent=r.toFixed(1);$('rsiHint').textContent=r>70?'Zona alta / posible sobrecompra':r<30?'Zona baja / posible sobreventa':'Zona intermedia';
-  $('trend').textContent=up?'ALCISTA':'BAJISTA';$('trend').style.color=up?'#25d695':'#ff647c';
-  $('macd').textContent=macdNow>=0?'POSITIVO':'NEGATIVO';$('macd').style.color=macdNow>=0?'#25d695':'#ff647c';$('macdHint').textContent=mom?'Momentum mejorando':'Momentum debilitándose';
-  $('score').textContent=Math.round(Math.abs(points)/3*100)+'%';$('score').style.color=points>0?'#25d695':points<0?'#ff647c':'#ffc857';
-  draw(closes.slice(-48));setStatus('Conectado · datos recibidos de Binance','ok');
- }catch(e){setStatus('Sin conexión: '+e.message,'err');$('signal').textContent='ESPERAR';$('signal').className='signalword wait';$('reason').textContent='No se pudo obtener información. Revisa internet e intenta actualizar.';}
- finally{busy=false;$('refresh').textContent='Actualizar ahora';}
+let candles=[], chart, candleSeries, ema9Series, ema21Series, socket, reconnectTimer;
+function ema(vals,period){let k=2/(period+1),out=[];let prev=vals[0];out.push(prev);for(let i=1;i<vals.length;i++){prev=vals[i]*k+prev*(1-k);out.push(prev)}return out}
+function rsi(vals,p=14){if(vals.length<=p)return null;let gains=0,loss=0;for(let i=vals.length-p;i<vals.length;i++){let d=vals[i]-vals[i-1];if(d>0)gains+=d;else loss-=d}if(loss===0)return 100;return 100-100/(1+gains/loss)}
+function macd(vals){if(vals.length<35)return null;let a=ema(vals,12),b=ema(vals,26),line=vals.map((_,i)=>a[i]-b[i]),sig=ema(line.slice(25),9);return line[line.length-1]-sig[sig.length-1]}
+function aggregate5(data){let out=[];for(let i=0;i<data.length;i+=5){let x=data.slice(i,i+5);if(x.length<5)continue;out.push({time:x[0].time,open:x[0].open,high:Math.max(...x.map(c=>c.high)),low:Math.min(...x.map(c=>c.low)),close:x[x.length-1].close})}return out}
+function setStatus(ok,msg){$('connection').textContent=msg;$('dot').style.background=ok?'#21c784':'#f5c451'}
+function render(){
+ if(!candles.length)return;
+ const closes=candles.map(c=>c.close),e9=ema(closes,9),e21=ema(closes,21);
+ candleSeries.setData(candles);
+ ema9Series.setData(candles.map((c,i)=>({time:c.time,value:e9[i]})));
+ ema21Series.setData(candles.map((c,i)=>({time:c.time,value:e21[i]})));
+ let last=candles[candles.length-1],prev=candles[candles.length-2],rv=rsi(closes),mv=macd(closes);
+ $('price').textContent='$'+last.close.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+ let ch=prev?(last.close-prev.close)/prev.close*100:0;$('change').textContent=(ch>=0?'+':'')+ch.toFixed(3)+'%';$('change').style.color=ch>=0?'#21c784':'#ff5c6c';
+ const five=aggregate5(candles),fclose=five.map(c=>c.close),f9=fclose.length>=9?ema(fclose,9):[],f21=fclose.length>=21?ema(fclose,21):[];
+ let t5=f9.length&&f21.length?(f9.at(-1)>f21.at(-1)?1:-1):0;
+ let t1=e9.at(-1)>e21.at(-1)?1:-1, mom=closes.at(-1)>closes.at(-2)?1:-1;
+ let score=0;score+=t1;score+=t5;if(rv!==null)score+=(rv>52?1:rv<48?-1:0);if(mv!==null)score+=(mv>0?1:-1);score+=mom*.5;
+ let signal='ESPERAR',cls='wait',why=[];
+ if(t1===1)why.push('EMA 9 sobre EMA 21 en 1M');else why.push('EMA 9 debajo de EMA 21 en 1M');
+ if(t5===1)why.push('tendencia 5M alcista');else if(t5===-1)why.push('tendencia 5M bajista');else why.push('faltan velas para confirmar 5M');
+ if(rv!==null)why.push('RSI '+rv.toFixed(1));if(mv!==null)why.push('MACD '+(mv>=0?'positivo':'negativo'));
+ if(t1===1&&t5===1&&rv!==null&&rv>50&&mv!==null&&mv>0){signal='SUBE';cls='buy'}
+ if(t1===-1&&t5===-1&&rv!==null&&rv<50&&mv!==null&&mv<0){signal='BAJA';cls='sell'}
+ $('signal').textContent=signal;$('signal').className='signal '+cls;
+ $('score').textContent=Math.min(100,Math.round(Math.abs(score)/4.5*100))+'%';
+ $('reason').textContent=signal==='ESPERAR'?'No hay confirmación suficiente. '+why.join(' · '):'Confirmaciones: '+why.join(' · ');
+ $('ema1').textContent=t1===1?'ALCISTA':'BAJISTA';$('ema1').style.color=t1===1?'#21c784':'#ff5c6c';
+ $('rsi').textContent=rv===null?'Calculando':rv.toFixed(1);$('macd').textContent=mv===null?'Calculando':mv>0?'Positivo':'Negativo';
+ $('trend5').textContent=t5===1?'ALCISTA':t5===-1?'BAJISTA':'Calculando';$('trend5').style.color=t5===1?'#21c784':t5===-1?'#ff5c6c':'#f5c451';
 }
-$('refresh').addEventListener('click',load);load();setInterval(()=>{if(document.visibilityState==='visible')load()},30000);
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load()});
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-</script>
-</body></html>
+function initChart(){chart=LightweightCharts.createChart($('chart'),{layout:{background:{color:'#101d2d'},textColor:'#91a4bb'},grid:{vertLines:{color:'#1b2a3d'},horzLines:{color:'#1b2a3d'}},rightPriceScale:{borderColor:'#30445d'},timeScale:{borderColor:'#30445d',timeVisible:true,secondsVisible:false},crosshair:{mode:1}});candleSeries=chart.addCandlestickSeries({upColor:'#21c784',downColor:'#ff5c6c',borderUpColor:'#21c784',borderDownColor:'#ff5c6c',wickUpColor:'#21c784',wickDownColor:'#ff5c6c'});ema9Series=chart.addLineSeries({color:'#f5c451',lineWidth:2});ema21Series=chart.addLineSeries({color:'#55a8ff',lineWidth:2});}
+async function load(){try{let r=await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=240');if(!r.ok)throw Error('HTTP '+r.status);let a=await r.json();candles=a.map(x=>({time:Math.floor(x[0]/1000),open:+x[1],high:+x[2],low:+x[3],close:+x[4]}));render();chart.timeScale().fitContent();setStatus(true,'Datos en vivo · Binance BTC/USDT');connect()}catch(e){setStatus(false,'No se pudo cargar el precio. Toca Actualizar.');console.error(e)}}
+function connect(){if(socket)socket.close();socket=new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@kline_1m');socket.onopen=()=>setStatus(true,'Conectado · velas 1 minuto');socket.onmessage=e=>{let k=JSON.parse(e.data).k,c={time:Math.floor(k.t/1000),open:+k.o,high:+k.h,low:+k.l,close:+k.c};let i=candles.findIndex(x=>x.time===c.time);if(i>=0)candles[i]=c;else{candles.push(c);if(candles.length>300)candles.shift()}render()};socket.onclose=()=>{setStatus(false,'Reconectando…');clearTimeout(reconnectTimer);reconnectTimer=setTimeout(connect,4000)};socket.onerror=()=>socket.close()}
+$('refresh').onclick=load;
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+initChart();load();
+</script></body></html>
