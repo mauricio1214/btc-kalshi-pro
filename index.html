@@ -6,83 +6,108 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="BTC Kalshi Pro">
 <link rel="manifest" href="manifest.json">
-<title>BTC KALSHI PRO 1M</title>
+<title>BTC KALSHI PRO ULTIMATE</title>
 <script src="https://unpkg.com/lightweight-charts@4.2.2/dist/lightweight-charts.standalone.production.js"></script>
 <style>
-:root{color-scheme:dark;--bg:#07111f;--panel:#101d2d;--line:#20334a;--muted:#91a4bb;--green:#21c784;--red:#ff5c6c;--yellow:#f5c451}
+:root{color-scheme:dark;--bg:#07111f;--panel:#101d2d;--line:#20334a;--muted:#91a4bb;--green:#21c784;--red:#ff5c6c;--yellow:#f5c451;--blue:#55a8ff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#edf4fc;font:15px -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif}
-header{padding:18px 16px 12px;background:#0b1727;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}
-h1{font-size:19px;margin:0 0 5px;letter-spacing:.4px}.sub{font-size:12px;color:var(--muted)}
-main{max-width:900px;margin:auto;padding:12px;display:grid;gap:12px}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px}
-.price{font-size:25px;font-weight:750;font-variant-numeric:tabular-nums}.muted{color:var(--muted);font-size:12px}
+header{padding:16px;background:#0b1727;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+h1{font-size:19px;margin:0 0 5px}.sub,.muted{font-size:12px;color:var(--muted)}
+main{max-width:1000px;margin:auto;padding:12px;display:grid;gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}.price{font-size:25px;font-weight:800;font-variant-numeric:tabular-nums}
 .pill{padding:6px 9px;border-radius:999px;background:#1b2b40;color:#c7d5e5;font-size:12px}
-#chart{height:330px;width:100%}.signal{font-size:25px;font-weight:800;letter-spacing:.5px}.buy{color:var(--green)}.sell{color:var(--red)}.wait{color:var(--yellow)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric{background:#0b1727;border-radius:10px;padding:10px}.metric b{display:block;font-size:17px;margin-top:4px}
-button{border:0;border-radius:10px;padding:10px 13px;background:#203852;color:#fff;font-weight:650}
-button:active{opacity:.75}.small{font-size:12px;color:var(--muted);line-height:1.45}
-.status{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);margin-right:6px}
+button{border:1px solid #34516f;border-radius:10px;padding:10px 13px;background:#203852;color:#fff;font-weight:700}
+button.active{background:#176344;border-color:#21c784}button:active{opacity:.75}
+#chart{height:340px;width:100%;margin-top:10px}.signal{font-size:27px;font-weight:900}.buy{color:var(--green)}.sell{color:var(--red)}.wait{color:var(--yellow)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
+.metric{background:#0b1727;border-radius:10px;padding:10px;min-width:0}.metric b{display:block;font-size:17px;margin-top:5px;overflow-wrap:anywhere}
+.small{font-size:12px;color:var(--muted);line-height:1.5}.status{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);margin-right:6px}
+input{width:100%;background:#0b1727;color:#fff;border:1px solid #34516f;border-radius:9px;padding:11px;font-size:16px}
+.field{flex:1;min-width:125px}.field label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+.levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.level{background:#0b1727;border-radius:10px;padding:10px}.level span{font-size:11px;color:var(--muted)}.level b{display:block;margin-top:4px;font-size:16px}
+.good{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--yellow)}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:4px 14px 25px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}#chart{height:430px}}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.levels{grid-template-columns:repeat(4,minmax(0,1fr))}#chart{height:440px}}
 </style></head>
 <body>
-<header><h1>₿ BTC KALSHI PRO <span class="pill">1M + 5M</span></h1><div class="sub"><span class="status" id="dot"></span><span id="connection">Conectando con datos de mercado…</span></div></header>
+<header><h1>₿ BTC KALSHI PRO <span class="pill">ULTIMATE</span></h1><div class="sub"><span class="status" id="dot"></span><span id="connection">Conectando con Binance…</span></div></header>
 <main>
 <section class="card">
- <div class="row" style="justify-content:space-between"><div><div class="muted">BITCOIN / USDT</div><div class="price" id="price">—</div></div><div style="text-align:right"><div class="muted">Cambio 1m</div><div id="change" class="price" style="font-size:18px">—</div></div></div>
- <div class="row" style="margin-top:12px"><span class="pill">Temporalidad: 1 minuto</span><span class="pill">Confirmación: 5 minutos</span><button id="refresh">Actualizar</button></div>
+ <div class="row"><div><div class="muted">BITCOIN / USDT</div><div class="price" id="price">—</div></div><div style="text-align:right"><div class="muted">Cambio de vela</div><div id="change" class="price" style="font-size:18px">—</div></div></div>
+ <div class="row" style="margin-top:13px"><div class="row"><button class="tf active" data-tf="1m">1 MIN</button><button class="tf" data-tf="5m">5 MIN</button><button class="tf" data-tf="15m">15 MIN</button></div><button id="refresh">Actualizar</button></div>
+ <p class="small" style="margin-bottom:0">Elige la temporalidad de la gráfica. Las otras dos se usan como confirmación de tendencia.</p>
 </section>
-<section class="card"><div class="row" style="justify-content:space-between"><b>Gráfica de velas japonesas</b><span class="muted">EMA 9 / EMA 21</span></div><div id="chart"></div></section>
+<section class="card"><div class="row"><b>Gráfica de velas japonesas</b><span class="muted">EMA 9/21 · Bollinger · Volumen</span></div><div id="chart"></div></section>
 <section class="card">
- <div class="row" style="justify-content:space-between"><div><div class="muted">SEÑAL ACTUAL</div><div id="signal" class="signal wait">ESPERAR</div></div><div style="text-align:right"><div class="muted">Confluencia</div><div class="price" id="score" style="font-size:23px">—</div></div></div>
- <div class="small" id="reason" style="margin-top:9px">Esperando suficientes velas para calcular los indicadores.</div>
+ <div class="row"><div><div class="muted">SEÑAL TÉCNICA</div><div id="signal" class="signal wait">ESPERAR</div></div><div style="text-align:right"><div class="muted">Confluencia técnica</div><div id="score" class="price" style="font-size:24px">—</div></div></div>
+ <div id="reason" class="small" style="margin-top:9px">Cargando velas para calcular indicadores…</div>
+ <div class="small" style="margin-top:8px">La confluencia mide condiciones coincidentes; NO es la probabilidad de ganar.</div>
 </section>
-<section class="card"><b>Confirmaciones técnicas</b><div class="grid" style="margin-top:10px">
- <div class="metric"><span class="muted">EMA 9 / 21 · 1M</span><b id="ema1">—</b></div>
- <div class="metric"><span class="muted">RSI 14 · 1M</span><b id="rsi">—</b></div>
- <div class="metric"><span class="muted">MACD · 1M</span><b id="macd">—</b></div>
- <div class="metric"><span class="muted">Tendencia · 5M</span><b id="trend5">—</b></div>
- </div></section>
-<section class="card"><b>Cómo leer la señal</b><p class="small">SUBE o BAJA aparece únicamente cuando coinciden varias condiciones de tendencia e impulso en 1M y 5M. Si hay señales mezcladas, el sistema muestra ESPERAR. La señal es una estimación técnica, no una garantía ni una instrucción para apostar.</p><div class="small">Fuente de precios: mercado BTC/USDT de Binance. Puede haber diferencias frente al precio de referencia de Kalshi.</div></section>
-</main><footer>BTC KALSHI PRO · Herramienta informativa · No ejecuta operaciones</footer>
+<section class="card"><b>Indicadores y confirmaciones</b>
+ <div class="grid">
+  <div class="metric"><span class="muted">EMA 9 / 21</span><b id="ema">—</b></div>
+  <div class="metric"><span class="muted">RSI 14</span><b id="rsi">—</b></div>
+  <div class="metric"><span class="muted">MACD 12/26/9</span><b id="macd">—</b></div>
+  <div class="metric"><span class="muted">VWAP</span><b id="vwap">—</b></div>
+  <div class="metric"><span class="muted">Bandas Bollinger</span><b id="bb">—</b></div>
+  <div class="metric"><span class="muted">ATR 14</span><b id="atr">—</b></div>
+  <div class="metric"><span class="muted">Volumen vs promedio</span><b id="volume">—</b></div>
+  <div class="metric"><span class="muted">Tendencias 1/5/15</span><b id="trends">—</b></div>
+ </div>
+</section>
+<section class="card"><b>Niveles de riesgo estimados</b><div class="levels">
+ <div class="level"><span>ENTRADA DE REFERENCIA</span><b id="entry">—</b></div>
+ <div class="level"><span>STOP LOSS (ATR)</span><b id="stop">—</b></div>
+ <div class="level"><span>OBJETIVO 1 · 1R</span><b id="tp1">—</b></div>
+ <div class="level"><span>OBJETIVO 2 · 2R</span><b id="tp2">—</b></div>
+ </div><p class="small">Niveles ilustrativos basados en ATR. No son órdenes ni garantizan que el precio los alcance. En señal ESPERAR no se recomienda abrir una operación.</p>
+</section>
+<section class="card"><b>Calculadora de riesgo</b>
+ <div class="row" style="margin-top:10px">
+  <div class="field"><label for="capital">Capital (USDT)</label><input id="capital" type="number" min="1" step="1" value="1000"></div>
+  <div class="field"><label for="risk">Riesgo por operación (%)</label><input id="risk" type="number" min="0.1" max="5" step="0.1" value="1"></div>
+ </div>
+ <div class="grid">
+  <div class="metric"><span class="muted">Pérdida máxima planeada</span><b id="riskcash">—</b></div>
+  <div class="metric"><span class="muted">Tamaño estimado (BTC)</span><b id="sizebtc">—</b></div>
+ </div>
+ <p class="small">Cálculo educativo: tamaño = riesgo monetario ÷ distancia entre entrada y stop. No incluye comisiones, deslizamiento, apalancamiento ni liquidación. Revisa esos factores antes de operar.</p>
+</section>
+<section class="card"><b>Cómo funciona</b><p class="small">La app analiza EMA 9/21, RSI, MACD, VWAP, Bandas de Bollinger, ATR y volumen. También consulta velas separadas de 1, 5 y 15 minutos para confirmar la dirección. Si los datos no coinciden, muestra ESPERAR.</p><p class="small">Fuente: datos públicos de Binance BTC/USDT. El precio puede diferir del precio de referencia de Kalshi. La app no ejecuta operaciones ni administra fondos.</p></section>
+</main><footer>BTC KALSHI PRO ULTIMATE · Herramienta informativa · No garantiza ganancias</footer>
 <script>
 const $=id=>document.getElementById(id);
-let candles=[], chart, candleSeries, ema9Series, ema21Series, socket, reconnectTimer;
-function ema(vals,period){let k=2/(period+1),out=[];let prev=vals[0];out.push(prev);for(let i=1;i<vals.length;i++){prev=vals[i]*k+prev*(1-k);out.push(prev)}return out}
-function rsi(vals,p=14){if(vals.length<=p)return null;let gains=0,loss=0;for(let i=vals.length-p;i<vals.length;i++){let d=vals[i]-vals[i-1];if(d>0)gains+=d;else loss-=d}if(loss===0)return 100;return 100-100/(1+gains/loss)}
-function macd(vals){if(vals.length<35)return null;let a=ema(vals,12),b=ema(vals,26),line=vals.map((_,i)=>a[i]-b[i]),sig=ema(line.slice(25),9);return line[line.length-1]-sig[sig.length-1]}
-function aggregate5(data){let out=[];for(let i=0;i<data.length;i+=5){let x=data.slice(i,i+5);if(x.length<5)continue;out.push({time:x[0].time,open:x[0].open,high:Math.max(...x.map(c=>c.high)),low:Math.min(...x.map(c=>c.low)),close:x[x.length-1].close})}return out}
+const intervals=['1m','5m','15m'];let selected='1m',datasets={},chart,candleSeries,ema9Series,ema21Series,upperSeries,lowerSeries,volumeSeries,socket,reconnectTimer,loading=false;
+const fmt=n=>Number.isFinite(n)?n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):'—';
+function ema(a,p){if(a.length<p)return [];let k=2/(p+1),out=[],v=a[0];for(let i=0;i<a.length;i++){v=i===0?a[i]:a[i]*k+v*(1-k);out.push(v)}return out}
+function rsi(a,p=14){if(a.length<=p)return null;let g=0,l=0;for(let i=a.length-p;i<a.length;i++){let d=a[i]-a[i-1];if(d>0)g+=d;else l-=d}if(l===0)return 100;return 100-100/(1+g/l)}
+function macd(a){if(a.length<35)return null;let e12=ema(a,12),e26=ema(a,26),line=a.map((_,i)=>e12[i]-e26[i]);let sig=ema(line.slice(25),9);return line.at(-1)-sig.at(-1)}
+function atr(c,p=14){if(c.length<=p)return null;let tr=[];for(let i=1;i<c.length;i++)tr.push(Math.max(c[i].high-c[i].low,Math.abs(c[i].high-c[i-1].close),Math.abs(c[i].low-c[i-1].close)));return tr.slice(-p).reduce((s,x)=>s+x,0)/p}
+function vwap(c){let start=Math.max(0,c.length-100),pv=0,v=0;for(let i=start;i<c.length;i++){let x=c[i],vol=x.volume||0,typ=(x.high+x.low+x.close)/3;pv+=typ*vol;v+=vol}return v?pv/v:null}
+function boll(a,p=20){if(a.length<p)return null;let s=a.slice(-p),m=s.reduce((x,y)=>x+y,0)/p,sd=Math.sqrt(s.reduce((x,y)=>x+(y-m)**2,0)/p);return {mid:m,up:m+2*sd,low:m-2*sd}}
+function trend(c){if(!c||c.length<30)return 0;let a=c.map(x=>x.close),x=ema(a,9),y=ema(a,21);return x.at(-1)>y.at(-1)?1:-1}
 function setStatus(ok,msg){$('connection').textContent=msg;$('dot').style.background=ok?'#21c784':'#f5c451'}
-function render(){
- if(!candles.length)return;
- const closes=candles.map(c=>c.close),e9=ema(closes,9),e21=ema(closes,21);
- candleSeries.setData(candles);
- ema9Series.setData(candles.map((c,i)=>({time:c.time,value:e9[i]})));
- ema21Series.setData(candles.map((c,i)=>({time:c.time,value:e21[i]})));
- let last=candles[candles.length-1],prev=candles[candles.length-2],rv=rsi(closes),mv=macd(closes);
- $('price').textContent='$'+last.close.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
- let ch=prev?(last.close-prev.close)/prev.close*100:0;$('change').textContent=(ch>=0?'+':'')+ch.toFixed(3)+'%';$('change').style.color=ch>=0?'#21c784':'#ff5c6c';
- const five=aggregate5(candles),fclose=five.map(c=>c.close),f9=fclose.length>=9?ema(fclose,9):[],f21=fclose.length>=21?ema(fclose,21):[];
- let t5=f9.length&&f21.length?(f9.at(-1)>f21.at(-1)?1:-1):0;
- let t1=e9.at(-1)>e21.at(-1)?1:-1, mom=closes.at(-1)>closes.at(-2)?1:-1;
- let score=0;score+=t1;score+=t5;if(rv!==null)score+=(rv>52?1:rv<48?-1:0);if(mv!==null)score+=(mv>0?1:-1);score+=mom*.5;
- let signal='ESPERAR',cls='wait',why=[];
- if(t1===1)why.push('EMA 9 sobre EMA 21 en 1M');else why.push('EMA 9 debajo de EMA 21 en 1M');
- if(t5===1)why.push('tendencia 5M alcista');else if(t5===-1)why.push('tendencia 5M bajista');else why.push('faltan velas para confirmar 5M');
- if(rv!==null)why.push('RSI '+rv.toFixed(1));if(mv!==null)why.push('MACD '+(mv>=0?'positivo':'negativo'));
- if(t1===1&&t5===1&&rv!==null&&rv>50&&mv!==null&&mv>0){signal='SUBE';cls='buy'}
- if(t1===-1&&t5===-1&&rv!==null&&rv<50&&mv!==null&&mv<0){signal='BAJA';cls='sell'}
- $('signal').textContent=signal;$('signal').className='signal '+cls;
- $('score').textContent=Math.min(100,Math.round(Math.abs(score)/4.5*100))+'%';
- $('reason').textContent=signal==='ESPERAR'?'No hay confirmación suficiente. '+why.join(' · '):'Confirmaciones: '+why.join(' · ');
- $('ema1').textContent=t1===1?'ALCISTA':'BAJISTA';$('ema1').style.color=t1===1?'#21c784':'#ff5c6c';
- $('rsi').textContent=rv===null?'Calculando':rv.toFixed(1);$('macd').textContent=mv===null?'Calculando':mv>0?'Positivo':'Negativo';
- $('trend5').textContent=t5===1?'ALCISTA':t5===-1?'BAJISTA':'Calculando';$('trend5').style.color=t5===1?'#21c784':t5===-1?'#ff5c6c':'#f5c451';
+function initChart(){chart=LightweightCharts.createChart($('chart'),{layout:{background:{color:'#101d2d'},textColor:'#91a4bb'},grid:{vertLines:{color:'#1b2a3d'},horzLines:{color:'#1b2a3d'}},rightPriceScale:{borderColor:'#30445d'},timeScale:{borderColor:'#30445d',timeVisible:true,secondsVisible:false},crosshair:{mode:1}});candleSeries=chart.addCandlestickSeries({upColor:'#21c784',downColor:'#ff5c6c',borderUpColor:'#21c784',borderDownColor:'#ff5c6c',wickUpColor:'#21c784',wickDownColor:'#ff5c6c'});ema9Series=chart.addLineSeries({color:'#f5c451',lineWidth:2});ema21Series=chart.addLineSeries({color:'#55a8ff',lineWidth:2});upperSeries=chart.addLineSeries({color:'#9b8cff',lineWidth:1,lineStyle:2});lowerSeries=chart.addLineSeries({color:'#9b8cff',lineWidth:1,lineStyle:2});volumeSeries=chart.addHistogramSeries({priceFormat:{type:'volume'},priceScaleId:'',scaleMargins:{top:.82,bottom:0}});new ResizeObserver(()=>chart.applyOptions({width:$('chart').clientWidth})).observe($('chart'))}
+function draw(){let c=datasets[selected];if(!c||!c.length)return;let a=c.map(x=>x.close),e9=ema(a,9),e21=ema(a,21),bb=boll(a);candleSeries.setData(c);ema9Series.setData(c.map((x,i)=>({time:x.time,value:e9[i]})));ema21Series.setData(c.map((x,i)=>({time:x.time,value:e21[i]})));if(bb){upperSeries.setData([{time:c.at(-1).time,value:bb.up}]);lowerSeries.setData([{time:c.at(-1).time,value:bb.low}])}else{upperSeries.setData([]);lowerSeries.setData([])}volumeSeries.setData(c.map(x=>({time:x.time,value:x.volume||0,color:x.close>=x.open?'rgba(33,199,132,.35)':'rgba(255,92,108,.35)'})));chart.timeScale().fitContent();analyze()}
+function analyze(){let c=datasets[selected];if(!c||c.length<35)return;let a=c.map(x=>x.close),last=c.at(-1),prev=c.at(-2),e9=ema(a,9),e21=ema(a,21),rv=rsi(a),mv=macd(a),vw=vwap(c),av=atr(c),bb=boll(a),volAvg=c.slice(-21,-1).reduce((s,x)=>s+(x.volume||0),0)/20,volRatio=volAvg?(last.volume||0)/volAvg:null;
+let t1=trend(datasets['1m']),t5=trend(datasets['5m']),t15=trend(datasets['15m']),direction=t1+t5+t15;
+let conditions=[e9.at(-1)>e21.at(-1)?1:-1,rv>52?1:rv<48?-1:0,mv>0?1:mv<0?-1:0,vw!==null?(last.close>vw?1:-1):0,bb?(last.close>bb.mid?1:-1):0,volRatio!==null&&volRatio>1.15?(last.close>=prev.close?1:-1):0];
+let raw=conditions.reduce((s,x)=>s+x,0),score=Math.round(Math.abs(raw)/conditions.length*100),signal='ESPERAR',cls='wait';
+if(raw>=4&&direction>=2) {signal='SUBE';cls='buy'} else if(raw<=-4&&direction<=-2){signal='BAJA';cls='sell'}
+$('price').textContent='$'+fmt(last.close);let pct=(last.close-prev.close)/prev.close*100;$('change').textContent=(pct>=0?'+':'')+pct.toFixed(3)+'%';$('change').style.color=pct>=0?'#21c784':'#ff5c6c';
+$('signal').textContent=signal;$('signal').className='signal '+cls;$('score').textContent=score+'%';
+$('reason').textContent=`${selected.toUpperCase()}: ${raw>0?'sesgo comprador':raw<0?'sesgo vendedor':'indicadores mixtos'}. Confirmación 1M ${t1>0?'alcista':t1<0?'bajista':'—'}, 5M ${t5>0?'alcista':t5<0?'bajista':'—'}, 15M ${t15>0?'alcista':t15<0?'bajista':'—'}.`;
+$('ema').textContent=e9.at(-1)>e21.at(-1)?'ALCISTA':'BAJISTA';$('ema').className=e9.at(-1)>e21.at(-1)?'good':'bad';$('rsi').textContent=rv.toFixed(1);$('macd').textContent=mv===null?'—':mv>0?'POSITIVO':'NEGATIVO';$('vwap').textContent=vw?fmt(vw):'—';$('bb').textContent=bb?`${fmt(bb.low)} – ${fmt(bb.up)}`:'—';$('atr').textContent=av?fmt(av):'—';$('volume').textContent=volRatio?volRatio.toFixed(2)+'x promedio':'—';$('trends').textContent=[t1,t5,t15].map(x=>x>0?'↑':x<0?'↓':'—').join(' / ');
+let entry=last.close,dist=av?av*1.5:0,stop=signal==='BAJA'?entry+dist:entry-dist,tp1=signal==='BAJA'?entry-dist:entry+dist,tp2=signal==='BAJA'?entry-2*dist:entry+2*dist;
+$('entry').textContent='$'+fmt(entry);$('stop').textContent=dist?'$'+fmt(stop):'—';$('tp1').textContent=dist?'$'+fmt(tp1):'—';$('tp2').textContent=dist?'$'+fmt(tp2):'—';
+let cap=Math.max(0,Number($('capital').value)||0),risk=Math.max(0,Math.min(5,Number($('risk').value)||0))/100,loss=cap*risk,qty=dist?loss/dist:0;$('riskcash').textContent='$'+fmt(loss);$('sizebtc').textContent=qty?qty.toFixed(6):'—';
 }
-function initChart(){chart=LightweightCharts.createChart($('chart'),{layout:{background:{color:'#101d2d'},textColor:'#91a4bb'},grid:{vertLines:{color:'#1b2a3d'},horzLines:{color:'#1b2a3d'}},rightPriceScale:{borderColor:'#30445d'},timeScale:{borderColor:'#30445d',timeVisible:true,secondsVisible:false},crosshair:{mode:1}});candleSeries=chart.addCandlestickSeries({upColor:'#21c784',downColor:'#ff5c6c',borderUpColor:'#21c784',borderDownColor:'#ff5c6c',wickUpColor:'#21c784',wickDownColor:'#ff5c6c'});ema9Series=chart.addLineSeries({color:'#f5c451',lineWidth:2});ema21Series=chart.addLineSeries({color:'#55a8ff',lineWidth:2});}
-async function load(){try{let r=await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m&limit=240');if(!r.ok)throw Error('HTTP '+r.status);let a=await r.json();candles=a.map(x=>({time:Math.floor(x[0]/1000),open:+x[1],high:+x[2],low:+x[3],close:+x[4]}));render();chart.timeScale().fitContent();setStatus(true,'Datos en vivo · Binance BTC/USDT');connect()}catch(e){setStatus(false,'No se pudo cargar el precio. Toca Actualizar.');console.error(e)}}
-function connect(){if(socket)socket.close();socket=new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@kline_1m');socket.onopen=()=>setStatus(true,'Conectado · velas 1 minuto');socket.onmessage=e=>{let k=JSON.parse(e.data).k,c={time:Math.floor(k.t/1000),open:+k.o,high:+k.h,low:+k.l,close:+k.c};let i=candles.findIndex(x=>x.time===c.time);if(i>=0)candles[i]=c;else{candles.push(c);if(candles.length>300)candles.shift()}render()};socket.onclose=()=>{setStatus(false,'Reconectando…');clearTimeout(reconnectTimer);reconnectTimer=setTimeout(connect,4000)};socket.onerror=()=>socket.close()}
-$('refresh').onclick=load;
+async function fetchInterval(tf){let r=await fetch(`https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=${tf}&limit=250`);if(!r.ok)throw Error('Binance HTTP '+r.status);let a=await r.json();datasets[tf]=a.map(x=>({time:Math.floor(x[0]/1000),open:+x[1],high:+x[2],low:+x[3],close:+x[4],volume:+x[5]}))}
+async function loadAll(){if(loading)return;loading=true;try{await Promise.all(intervals.map(fetchInterval));draw();setStatus(true,'Conectado · Binance BTC/USDT · datos en vivo');connect()}catch(e){setStatus(false,'No se pudieron cargar datos. Revisa internet y toca Actualizar.');console.error(e)}finally{loading=false}}
+function connect(){if(socket){socket.onclose=null;socket.close()}socket=new WebSocket(`wss://stream.binance.com:9443/ws/btcusdt@kline_${selected}`);socket.onopen=()=>setStatus(true,`En vivo · velas ${selected.toUpperCase()} · Binance`);socket.onmessage=e=>{let k=JSON.parse(e.data).k,x={time:Math.floor(k.t/1000),open:+k.o,high:+k.h,low:+k.l,close:+k.c,volume:+k.v},a=datasets[selected]||[],i=a.findIndex(y=>y.time===x.time);if(i>=0)a[i]=x;else{a.push(x);if(a.length>250)a.shift()}datasets[selected]=a;draw()};socket.onclose=()=>{setStatus(false,'Reconectando…');clearTimeout(reconnectTimer);reconnectTimer=setTimeout(connect,4000)};socket.onerror=()=>socket.close()}
+document.querySelectorAll('.tf').forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.tf;document.querySelectorAll('.tf').forEach(x=>x.classList.toggle('active',x===b));if(datasets[selected]){draw();connect()}else loadAll()}));
+$('refresh').onclick=loadAll;['capital','risk'].forEach(id=>$(id).addEventListener('input',analyze));
 if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
-initChart();load();
+initChart();loadAll();
 </script></body></html>

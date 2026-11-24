@@ -1,11 +1,11 @@
 {
-  "name": "BTC KALSHI PRO 1M",
+  "name": "BTC KALSHI PRO ULTIMATE",
   "short_name": "BTC Kalshi",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#07111f",
   "theme_color": "#07111f",
-  "description": "Gráfica BTC con velas de 1 minuto y confirmación de 5 minutos",
+  "description": "Señales técnicas BTC/USDT en 1, 5 y 15 minutos con gestión de riesgo",
   "icons": [
     {
       "src": "icon-192.png",
